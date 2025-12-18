@@ -1,0 +1,24 @@
+{
+  "name": "artistfy",
+  "version": "1.0.0",
+  "description": "Aplicação web para pesquisa de artistas no Spotify",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:frontend\"",
+    "dev:api": "vercel dev --listen 5000",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "install:all": "npm install && cd frontend && npm install"
+  },
+  "keywords": [
+    "spotify",
+    "api",
+    "react",
+    "vercel"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "vercel": "^34.2.7"
+  }
+}
