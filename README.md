@@ -429,3 +429,9 @@ docs/API.md - Documentação da API
 
 docs/DEPLOYMENT.md - Guia de deploy
 
+-------------------------------------------------------------------------------------------------------------------------------
+
+Desenvolvido por Pedro Ataides como projeto de portfólio/estudo.
+
+© 2025 - Todos os direitos reservados.
+

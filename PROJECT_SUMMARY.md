@@ -230,10 +230,5 @@ npm run build
 vercel
 ```
 
-## Licença
 
-MIT
 
-## Contato
-
-Desenvolvido como projeto de portfólio/estudo.
