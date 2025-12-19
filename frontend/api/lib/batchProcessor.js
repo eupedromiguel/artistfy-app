@@ -74,6 +74,7 @@ async function enrichTracksWithLabels(tracks) {
       name: track.name,
       artists: track.artists?.map(a => a.name).join(', ') || '',
       album: track.album?.name || '',
+      albumData: track.album,
       releaseDate: albumInfo?.releaseDate || track.album?.release_date || '',
       duration: track.duration_ms,
       label: albumInfo?.label || 'N/A',

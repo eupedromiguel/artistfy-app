@@ -1,46 +1,62 @@
 import { formatDuration, formatDate } from '../../utils/formatters';
 
 export default function TrackItem({ track, index }) {
+  const albumImage = track.albumData?.images?.[0]?.url || track.image;
+
   return (
-    <div className="card mb-4">
-      <div className="grid grid-cols-12 gap-4 items-center">
-        <div className="col-span-1 text-gray-500 font-semibold">
-          #{index + 1}
-        </div>
+    <div className="card">
+      <div className="flex gap-4">
+        {albumImage && (
+          <img
+            src={albumImage}
+            alt={track.albumData?.name || track.album || track.name}
+            className="w-24 h-24 rounded-lg object-cover"
+          />
+        )}
 
-        <div className="col-span-7 md:col-span-4">
-          <h3 className="font-semibold text-white mb-1">{track.name}</h3>
-          <p className="text-sm text-gray-400">{track.artists}</p>
-        </div>
+        <div className="flex-1">
+          <div className="flex items-start justify-between mb-2">
+            <div>
+              <span className="text-gray-500 font-semibold mr-2">#{index + 1}</span>
+              <h3 className="inline font-semibold text-white text-lg">{track.name}</h3>
+            </div>
 
-        <div className="col-span-4 md:col-span-3 hidden md:block">
-          <p className="text-sm text-gray-400">{track.album}</p>
-        </div>
+            {track.external_url && (
+              <a
+                href={track.external_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:text-spotify-violet text-sm"
+              >
+                Spotify
+              </a>
+            )}
+          </div>
 
-        <div className="col-span-2 md:col-span-2 text-center">
-          <p className="text-sm text-gray-400">{formatDate(track.releaseDate)}</p>
-        </div>
+          <p className="text-sm text-gray-400 mb-3">{track.artists}</p>
 
-        <div className="col-span-2 md:col-span-1 text-center">
-          <p className="text-sm text-gray-400">{formatDuration(track.duration)}</p>
-        </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+            <div>
+              <span className="text-gray-500">Álbum:</span>
+              <p className="text-gray-300">{track.album}</p>
+            </div>
 
-        <div className="col-span-2 md:col-span-1 text-right">
-          {track.external_url && (
-            <a
-              href={track.external_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white hover:text-spotify-violet text-sm"
-            >
-              Spotify
-            </a>
-          )}
-        </div>
-      </div>
+            <div>
+              <span className="text-gray-500">Lançamento:</span>
+              <p className="text-gray-300">{formatDate(track.releaseDate)}</p>
+            </div>
 
-      <div className="mt-2 text-xs text-gray-500">
-        <strong>Gravadora:</strong> {track.label}
+            <div>
+              <span className="text-gray-500">Duração:</span>
+              <p className="text-gray-300">{formatDuration(track.duration)}</p>
+            </div>
+
+            <div>
+              <span className="text-gray-500">Gravadora:</span>
+              <p className="text-gray-300">{track.label}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

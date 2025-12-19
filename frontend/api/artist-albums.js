@@ -51,20 +51,22 @@ export default async (req, res) => {
     const albumMap = await fetchAlbumsBatch(albumIds);
 
     // Formata resposta
-    const albums = data.items.map(album => {
-      const details = albumMap.get(album.id);
+    const albums = data.items
+      .map(album => {
+        const details = albumMap.get(album.id);
 
-      return {
-        id: album.id,
-        name: album.name,
-        releaseDate: details?.releaseDate || album.release_date,
-        label: details?.label || 'N/A',
-        totalTracks: details?.totalTracks || album.total_tracks,
-        image: album.images[0]?.url || null,
-        external_url: album.external_urls.spotify,
-        artists: album.artists.map(a => a.name).join(', ')
-      };
-    });
+        return {
+          id: album.id,
+          name: album.name,
+          releaseDate: details?.releaseDate || album.release_date,
+          label: details?.label || 'N/A',
+          totalTracks: details?.totalTracks || album.total_tracks,
+          image: album.images[0]?.url || null,
+          external_url: album.external_urls.spotify,
+          artists: album.artists.map(a => a.name).join(', ')
+        };
+      })
+      .filter(album => album.totalTracks > 1); // Filtra apenas álbuns com mais de 1 faixa
 
     return res.status(200).json({
       albums,
