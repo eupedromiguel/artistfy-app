@@ -20,8 +20,8 @@ export function exportTracksToPDF(tracks, artistName) {
             padding: 20px;
           }
           h1 {
-            color: #1DB954;
-            border-bottom: 2px solid #1DB954;
+            color: #A327F5;
+            border-bottom: 2px solid #A327F5;
             padding-bottom: 10px;
           }
           table {
@@ -83,7 +83,7 @@ export function exportTracksToPDF(tracks, artistName) {
         </table>
 
         <div class="footer">
-          <p>Relatório gerado via Artistfy - Dados do Spotify</p>
+          <p>Relatório gerado via artistFy - Dados do Spotify</p>
         </div>
       </body>
     </html>
