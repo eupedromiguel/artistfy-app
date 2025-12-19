@@ -50,12 +50,12 @@ export default function TracksChart({ tracks }) {
             <Tooltip
               contentStyle={{
                 backgroundColor: '#282828',
-                border: '1px solid #1DB954',
+                border: '1px solid #A327F5',
                 borderRadius: '8px'
               }}
             />
             <Legend />
-            <Bar dataKey="quantidade" fill="#1DB954" name="Quantidade de Faixas" />
+            <Bar dataKey="quantidade" fill="#A327F5" name="Quantidade de Faixas" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -76,12 +76,12 @@ export default function TracksChart({ tracks }) {
             <Tooltip
               contentStyle={{
                 backgroundColor: '#282828',
-                border: '1px solid #1DB954',
+                border: '1px solid #A327F5',
                 borderRadius: '8px'
               }}
             />
             <Legend />
-            <Bar dataKey="quantidade" fill="#1DB954" name="Quantidade de Faixas" />
+            <Bar dataKey="quantidade" fill="#A327F5" name="Quantidade de Faixas" />
           </BarChart>
         </ResponsiveContainer>
       </div>

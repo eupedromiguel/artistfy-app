@@ -52,7 +52,7 @@ export default async (req, res) => {
 
     // Extrai TODAS as tracks de TODOS os álbuns
     const allTracks = [];
-    albums.items.forEach(album => {
+    albums.items.forEach((album) => {
       const albumDetails = albumMap.get(album.id);
       const tracks = albumDetails?.tracks || [];
 

@@ -2,12 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-// Importa as funções serverless
-import searchArtist from './frontend/api/search-artist.js';
-import artist from './frontend/api/artist.js';
-import artistTracks from './frontend/api/artist-tracks.js';
-import artistAlbums from './frontend/api/artist-albums.js';
-
 dotenv.config();
 
 const app = express();
@@ -23,9 +17,13 @@ app.use((req, _res, next) => {
   next();
 });
 
-// Adapta as funções serverless para Express
-const adaptVercelFunction = (handler) => async (req, res) => {
+// Adapta as funções serverless para Express com import dinâmico
+const adaptVercelFunction = (modulePath) => async (req, res) => {
   try {
+    console.log(`\n[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    // Import dinâmico com cache bust
+    const module = await import(`${modulePath}?update=${Date.now()}`);
+    const handler = module.default;
     await handler(req, res);
   } catch (error) {
     console.error('Error:', error);
@@ -33,14 +31,14 @@ const adaptVercelFunction = (handler) => async (req, res) => {
   }
 };
 
-// Rotas da API
-app.get('/api/search-artist', adaptVercelFunction(searchArtist));
-app.get('/api/artist', adaptVercelFunction(artist));
-app.get('/api/artist-tracks', adaptVercelFunction(artistTracks));
-app.get('/api/artist-albums', adaptVercelFunction(artistAlbums));
+// Rotas da API com import dinâmico
+app.get('/api/search-artist', adaptVercelFunction('./frontend/api/search-artist.js'));
+app.get('/api/artist', adaptVercelFunction('./frontend/api/artist.js'));
+app.get('/api/artist-tracks', adaptVercelFunction('./frontend/api/artist-tracks.js'));
+app.get('/api/artist-albums', adaptVercelFunction('./frontend/api/artist-albums.js'));
 
 // Rota de health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
