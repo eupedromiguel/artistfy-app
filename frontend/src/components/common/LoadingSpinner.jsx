@@ -6,9 +6,22 @@ export default function LoadingSpinner({ size = 'md', text = 'Carregando...' }) 
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-8">
-      <div className={`${sizeClasses[size]} border-spotify-gray border-t-spotify-violet rounded-full animate-spin`}></div>
-      {text && <p className="mt-4 text-gray-400">{text}</p>}
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <div
+        className={`
+          ${sizeClasses[size]}
+          border-spotify-gray
+          border-t-spotify-violet
+          rounded-full
+          animate-spin
+        `}
+      />
+
+      {text && (
+        <p className="mt-4 text-gray-400">
+          {text}
+        </p>
+      )}
     </div>
   );
 }

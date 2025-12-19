@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
-const COLORS = ['#1DB954', '#1ED760', '#1AA34A', '#158E3A', '#10792E'];
+const COLORS = ['#A327F5', '#C15EDB', '#DA91ED', '#D7B4E0', '#F7DBFF'];
 
 export default function AlbumsChart({ albums }) {
   if (!albums || albums.length === 0) return null;
@@ -52,12 +52,12 @@ export default function AlbumsChart({ albums }) {
             <Tooltip
               contentStyle={{
                 backgroundColor: '#282828',
-                border: '1px solid #1DB954',
+                border: '1px solid #A327F5',
                 borderRadius: '8px'
               }}
             />
             <Legend />
-            <Bar dataKey="quantidade" fill="#1DB954" name="Quantidade de Álbuns" />
+            <Bar dataKey="quantidade" fill="#A327F5" name="Quantidade de Álbuns" />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -90,7 +90,7 @@ export default function AlbumsChart({ albums }) {
               <Tooltip
                 contentStyle={{
                   backgroundColor: '#282828',
-                  border: '1px solid #1DB954',
+                  border: '1px solid #A327F5',
                   borderRadius: '8px'
                 }}
               />

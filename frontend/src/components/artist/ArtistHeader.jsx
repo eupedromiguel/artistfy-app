@@ -49,7 +49,7 @@ export default function ArtistHeader({ artist, onViewTracks, onViewAlbums }) {
             rel="noopener noreferrer"
             className="inline-block mt-4 text-spotify-green hover:underline"
           >
-            Ver no Spotify →
+            Ver no Spotify
           </a>
         )}
       </div>

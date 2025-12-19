@@ -71,16 +71,6 @@ export default function ArtistPage() {
             </Button>
           </div>
 
-          {artist.external_url && (
-            <a
-              href={artist.external_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-4 text-spotify-green hover:underline"
-            >
-              Ver no Spotify
-            </a>
-          )}
         </div>
       </div>
     </div>

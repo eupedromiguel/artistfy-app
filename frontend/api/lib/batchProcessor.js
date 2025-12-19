@@ -40,7 +40,8 @@ async function fetchAlbumsBatch(albumIds) {
             releaseDate: album.release_date,
             totalTracks: album.total_tracks,
             name: album.name,
-            images: album.images
+            images: album.images,
+            tracks: album.tracks?.items || []
           });
         }
       });
