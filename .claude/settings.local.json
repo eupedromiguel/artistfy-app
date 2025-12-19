@@ -5,7 +5,10 @@
       "Bash(tree:*)",
       "Bash(npm install:*)",
       "Bash(timeout 3 node:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(for file in *.js)",
+      "Bash(do mv \"$file\" \"$file%.js.cjs\")",
+      "Bash(done)"
     ]
   }
 }

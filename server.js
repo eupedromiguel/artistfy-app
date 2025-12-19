@@ -16,10 +16,10 @@ app.use((req, res, next) => {
 });
 
 // Importa as funções serverless
-const searchArtist = require('./api/search-artist');
-const artist = require('./api/artist');
-const artistTracks = require('./api/artist-tracks');
-const artistAlbums = require('./api/artist-albums');
+const searchArtist = require('./frontend/api/search-artist.cjs');
+const artist = require('./frontend/api/artist.cjs');
+const artistTracks = require('./frontend/api/artist-tracks.cjs');
+const artistAlbums = require('./frontend/api/artist-albums.cjs');
 
 // Adapta as funções serverless para Express
 const adaptVercelFunction = (handler) => async (req, res) => {
