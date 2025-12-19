@@ -1,6 +1,7 @@
 // API base URL - ajustar conforme ambiente
+// Em dev, o Vite proxy redireciona /api para http://localhost:5000/api
 export const API_BASE_URL = import.meta.env.PROD
-  ? 'https://seu-dominio-vercel.app/api'
+  ? 'https://artistfy.vercel.app/api'
   : '/api';
 
 // Configurações de paginação
