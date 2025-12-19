@@ -3,7 +3,7 @@ import SearchBar from '../components/common/SearchBar';
 import { MESSAGES } from '../utils/constants';
 import searchIcon from '../components/icons/icons8-pesquisar-100.png';
 import audioIcon from '../components/icons/icons8-audiolivro-100.png';
-import downloadIcon from '../components/icons/icons8-pesquisar-100.png';
+import downloadIcon from '../components/icons/icons8-bloco-de-anotações-100.png';
 import principalIcon from '../components/icons/icons8-bloco-de-anotações-principal.png';
 
 export default function HomePage() {

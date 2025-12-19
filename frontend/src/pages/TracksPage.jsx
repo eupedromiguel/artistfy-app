@@ -99,12 +99,14 @@ export default function TracksPage() {
             </Button>
           )}
 
-          <Button variant="outline" onClick={() => setShowExcelModal(true)}>
-            📊 Exportar em Excel
+          <Button
+            onClick={() => setShowExcelModal(true)}>
+            Exportar em Excel
           </Button>
 
-          <Button variant="outline" onClick={() => setShowPDFModal(true)}>
-            📄 Exportar em PDF
+          <Button
+            onClick={() => setShowPDFModal(true)}>
+            Exportar em PDF
           </Button>
         </div>
       )}
