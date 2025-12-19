@@ -13,7 +13,7 @@ export default function HomePage() {
     <div className="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center px-4">
       <div className="text-center mb-12">
         <h1 className="text-6xl font-bold text-spotify-green mb-4">
-          Artistfy
+          artistFy
         </h1>
         <p className="text-xl text-gray-400 mb-2">
           Explore artistas do Spotify
