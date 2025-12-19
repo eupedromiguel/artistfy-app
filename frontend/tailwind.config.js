@@ -8,11 +8,14 @@ export default {
     extend: {
       colors: {
         spotify: {
-          green: '#1DB954',
+          violet: '#A327F5',
           black: '#191414',
           white: '#FFFFFF',
           gray: '#282828'
         }
+      },
+      fontFamily: {
+        'jetbrains': ['"JetBrains Mono"', 'monospace']
       }
     }
   },

@@ -6,11 +6,15 @@
   body {
     @apply bg-spotify-black text-spotify-white;
   }
+
+  h1, h3 {
+    @apply font-jetbrains;
+  }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-spotify-green text-white font-semibold py-2 px-6 rounded-full hover:scale-105 transition-transform duration-200;
+    @apply bg-spotify-violet text-white font-semibold py-2 px-6 rounded-full hover:scale-105 transition-transform duration-200;
   }
 
   .btn-secondary {
