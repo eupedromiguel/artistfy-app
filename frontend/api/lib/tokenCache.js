@@ -35,7 +35,7 @@ function clearToken() {
   tokenExpiresAt = null;
 }
 
-module.exports = {
+export {
   setToken,
   getToken,
   clearToken

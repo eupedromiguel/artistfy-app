@@ -1,4 +1,4 @@
-const { getToken, setToken } = require('./tokenCache.cjs');
+import { getToken, setToken } from './tokenCache.js';
 
 const SPOTIFY_TOKEN_URL = 'https://accounts.spotify.com/api/token';
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
@@ -70,7 +70,7 @@ async function spotifyRequest(endpoint, options = {}) {
   return response.json();
 }
 
-module.exports = {
+export {
   getValidToken,
   spotifyRequest
 };

@@ -46,7 +46,7 @@ function validateParams(params, required) {
   }
 }
 
-module.exports = {
+export {
   handleError,
   validateParams
 };

@@ -1,12 +1,12 @@
-const { spotifyRequest } = require('./lib/spotify.cjs');
-const { handleError, validateParams } = require('./lib/errorHandler.cjs');
+import { spotifyRequest } from './lib/spotify.js';
+import { handleError, validateParams } from './lib/errorHandler.js';
 
 /**
- * GET /api/artist
- * Retorna dados básicos de um artista
- * Query params: id (ID do artista no Spotify)
+ * GET /api/search-artist
+ * Busca artistas pelo nome
+ * Query params: q (nome do artista)
  */
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Configura CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -21,15 +21,17 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const { id } = req.query;
+    const { q } = req.query;
 
-    validateParams({ id }, ['id']);
+    validateParams({ q }, ['q']);
 
-    // Busca dados do artista
-    const artist = await spotifyRequest(`/artists/${id}`);
+    // Busca artistas no Spotify (máximo 20 resultados)
+    const data = await spotifyRequest(
+      `/search?q=${encodeURIComponent(q)}&type=artist&limit=20`
+    );
 
     // Formata resposta
-    return res.status(200).json({
+    const artists = data.artists.items.map(artist => ({
       id: artist.id,
       name: artist.name,
       image: artist.images[0]?.url || null,
@@ -37,6 +39,11 @@ module.exports = async (req, res) => {
       followers: artist.followers.total,
       popularity: artist.popularity,
       external_url: artist.external_urls.spotify
+    }));
+
+    return res.status(200).json({
+      total: data.artists.total,
+      artists
     });
 
   } catch (error) {

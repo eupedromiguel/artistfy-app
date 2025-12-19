@@ -7,7 +7,7 @@ const { handleError, validateParams } = require('./lib/errorHandler.cjs');
  * Retorna álbuns do artista paginados
  * Query params: id (ID do artista), offset (padrão: 0), limit (padrão: 20)
  */
-module.exports = async (req, res) => {
+export default async (req, res) => {
   // Configura CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
