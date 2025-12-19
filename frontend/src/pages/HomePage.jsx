@@ -17,7 +17,11 @@ export default function HomePage() {
     <div className="min-h-[calc(100vh-200px)] flex flex-col items-center justify-center px-4">
       <div className="text-center mb-12">
         <div className="flex justify-center mb-4">
-          <img src={principalIcon} alt="Ícone principal" className="w-20 h-20" />
+          <img
+            src={principalIcon}
+            alt="Ícone principal"
+            className="w-20 h-20 transition-transform duration-500 hover:scale-125 hover:rotate-12"
+          />
         </div>
         <h1 className="text-6xl font-bold text-spotify-violet mb-4">
           artistFy
@@ -35,7 +39,11 @@ export default function HomePage() {
       <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl">
         <div className="text-center">
           <div className="mb-2 flex justify-center">
-            <img src={searchIcon} alt="Pesquisar" className="w-12 h-12" />
+            <img
+              src={searchIcon}
+              alt="Pesquisar"
+              className="w-12 h-12 transition-transform duration-300 hover:scale-110 hover:rotate-6"
+            />
           </div>
           <h3 className="text-lg font-semibold mb-2">Pesquise Artistas</h3>
           <p className="text-sm text-gray-400">
@@ -45,7 +53,11 @@ export default function HomePage() {
 
         <div className="text-center">
           <div className="mb-2 flex justify-center">
-            <img src={audioIcon} alt="Visualize Dados" className="w-12 h-12" />
+            <img
+              src={audioIcon}
+              alt="Visualize Dados"
+              className="w-12 h-12 transition-transform duration-300 hover:scale-110 hover:-rotate-6"
+            />
           </div>
           <h3 className="text-lg font-semibold mb-2">Visualize Dados</h3>
           <p className="text-sm text-gray-400">
@@ -55,7 +67,11 @@ export default function HomePage() {
 
         <div className="text-center">
           <div className="mb-2 flex justify-center">
-            <img src={downloadIcon} alt="Exporte Relatórios" className="w-12 h-12" />
+            <img
+              src={downloadIcon}
+              alt="Exporte Relatórios"
+              className="w-12 h-12 transition-transform duration-300 hover:scale-110 hover:rotate-6"
+            />
           </div>
           <h3 className="text-lg font-semibold mb-2">Exporte Relatórios</h3>
           <p className="text-sm text-gray-400">
