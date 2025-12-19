@@ -36,7 +36,7 @@ export function exportTracksToPDF(tracks, artistName) {
             font-size: 12px;
           }
           th {
-            background-color: #1DB954;
+            background-color: #A327F5;
             color: white;
           }
           tr:nth-child(even) {
@@ -133,7 +133,7 @@ export function exportAlbumsToPDF(albums, artistName) {
             font-size: 12px;
           }
           th {
-            background-color: #1DB954;
+            background-color: #A327F5;
             color: white;
           }
           tr:nth-child(even) {

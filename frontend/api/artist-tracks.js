@@ -1,5 +1,5 @@
 import { spotifyRequest } from './lib/spotify.js';
-import { enrichTracksWithLabels } from './lib/batchProcessor.js';
+import { enrichTracksWithLabels, fetchAlbumsBatch } from './lib/batchProcessor.js';
 import { handleError, validateParams } from './lib/errorHandler.js';
 
 /**
@@ -22,73 +22,76 @@ export default async (req, res) => {
   }
 
   try {
-    const { id, market = 'BR', offset = '0', limit = '20' } = req.query;
+    const { id, offset = '0', limit = '20' } = req.query;
 
     validateParams({ id }, ['id']);
 
     const offsetNum = parseInt(offset);
     const limitNum = parseInt(limit);
 
-    // Para a primeira página, usa top tracks
-    if (offsetNum === 0) {
-      const topTracks = await spotifyRequest(
-        `/artists/${id}/top-tracks?market=${market}`
-      );
-
-      // Enriquece com gravadoras em batch
-      const enrichedTracks = await enrichTracksWithLabels(topTracks.tracks);
-
-      return res.status(200).json({
-        tracks: enrichedTracks.slice(0, limitNum),
-        total: enrichedTracks.length,
-        offset: offsetNum,
-        limit: limitNum,
-        hasMore: enrichedTracks.length > limitNum
-      });
-    }
-
-    // Para páginas seguintes, busca álbuns do artista e extrai tracks
+    // Busca álbuns do artista
     const albums = await spotifyRequest(
-      `/artists/${id}/albums?limit=${limitNum}&offset=${offsetNum}&include_groups=album,single`
+      `/artists/${id}/albums?limit=50&offset=0&include_groups=album,single`
     );
 
     if (!albums.items || albums.items.length === 0) {
       return res.status(200).json({
         tracks: [],
-        total: albums.total || 0,
+        total: 0,
         offset: offsetNum,
         limit: limitNum,
         hasMore: false
       });
     }
 
-    // Busca tracks de cada álbum
-    const tracksPromises = albums.items.map(album =>
-      spotifyRequest(`/albums/${album.id}/tracks?limit=1`)
-    );
+    // Extrai IDs dos álbuns
+    const albumIds = albums.items.map(album => album.id);
 
-    const tracksResponses = await Promise.all(tracksPromises);
+    // Busca informações completas dos álbuns em batch (inclui tracks.items)
+    const albumMap = await fetchAlbumsBatch(albumIds);
 
-    // Flatten e formata tracks
-    const tracks = tracksResponses
-      .flatMap(response => response.items)
-      .filter(track => track)
-      .map(track => ({
-        ...track,
-        album: albums.items.find(album =>
-          album.id === track.uri?.split(':')[2]?.split('/')[0]
-        )
-      }));
+    // Extrai TODAS as tracks de TODOS os álbuns
+    const allTracks = [];
+    albums.items.forEach(album => {
+      const albumDetails = albumMap.get(album.id);
+      const tracks = albumDetails?.tracks || [];
+
+      tracks.forEach(track => {
+        allTracks.push({
+          ...track,
+          album: {
+            id: album.id,
+            name: album.name,
+            release_date: albumDetails?.releaseDate || album.release_date,
+            images: album.images
+          }
+        });
+      });
+    });
+
+    // Remove duplicatas (mesma track em diferentes álbuns/compilações)
+    const uniqueTracks = [];
+    const seenIds = new Set();
+
+    allTracks.forEach(track => {
+      if (!seenIds.has(track.id)) {
+        seenIds.add(track.id);
+        uniqueTracks.push(track);
+      }
+    });
+
+    // Aplica paginação
+    const paginatedTracks = uniqueTracks.slice(offsetNum, offsetNum + limitNum);
 
     // Enriquece com gravadoras
-    const enrichedTracks = await enrichTracksWithLabels(tracks);
+    const enrichedTracks = await enrichTracksWithLabels(paginatedTracks);
 
     return res.status(200).json({
       tracks: enrichedTracks,
-      total: albums.total,
+      total: uniqueTracks.length,
       offset: offsetNum,
       limit: limitNum,
-      hasMore: albums.next !== null
+      hasMore: offsetNum + limitNum < uniqueTracks.length
     });
 
   } catch (error) {

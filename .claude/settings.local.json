@@ -10,7 +10,8 @@
       "Bash(do mv \"$file\" \"$file%.js.cjs\")",
       "Bash(done)",
       "Bash(for file in *.cjs)",
-      "Bash(do mv \"$file\" \"$file%.cjs.js\")"
+      "Bash(do mv \"$file\" \"$file%.cjs.js\")",
+      "Bash(npm run build:*)"
     ]
   }
 }
