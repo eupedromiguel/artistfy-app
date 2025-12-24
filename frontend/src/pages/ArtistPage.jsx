@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useArtist } from '../hooks/useArtist';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import Button from '../components/common/Button';
@@ -7,7 +7,17 @@ import { formatFollowers } from '../utils/formatters';
 export default function ArtistPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const { artist, loading, error } = useArtist(id);
+
+  const handleGoBack = () => {
+    // Retorna para a pesquisa se veio de lá, senão vai para home
+    if (location.state?.fromSearch) {
+      navigate(-1);
+    } else {
+      navigate('/pesquisa');
+    }
+  };
 
   if (loading) return <LoadingSpinner />;
 
@@ -24,9 +34,35 @@ export default function ArtistPage() {
 
   if (!artist) return null;
 
+  // Cor baseada na popularidade
+  const getPopularityColor = (popularity) => {
+    if (popularity >= 80) return '#1DB954'; // Verde Spotify
+    if (popularity >= 60) return '#A327F5'; // Roxo
+    if (popularity >= 40) return '#FFA500'; // Laranja
+    return '#FF4444'; // Vermelho
+  };
+
+  // Texto descritivo da popularidade
+  const getPopularityLabel = (popularity) => {
+    if (popularity >= 80) return 'Muito Popular';
+    if (popularity >= 60) return 'Popular';
+    if (popularity >= 40) return 'Moderado';
+    return 'Em Crescimento';
+  };
+
   return (
-  <div className="flex min-h-[calc(90vh-144px)] items-center justify-center px-4">
-    <div className="w-full max-w-2xl bg-spotify-gray rounded-lg shadow-xl p-8">
+  <div className="container mx-auto px-4 py-8">
+    {/* Botão Voltar */}
+    <Button
+      variant="secondary"
+      onClick={handleGoBack}
+      className="mb-6"
+    >
+      Voltar para pesquisa
+    </Button>
+
+    <div className="flex min-h-[calc(90vh-200px)] items-center justify-center">
+      <div className="w-full max-w-4xl bg-spotify-gray rounded-lg shadow-xl p-8">
       <div className="flex flex-col md:flex-row gap-8 items-center">
         {artist.image && (
           <img
@@ -51,10 +87,6 @@ export default function ArtistPage() {
                 Gêneros: {artist.genres.join(', ')}
               </p>
             )}
-
-            <p className="text-gray-500">
-              Popularidade: {artist.popularity}/100
-            </p>
           </div>
 
           <div className="flex flex-wrap justify-center md:justify-start gap-4">
@@ -79,6 +111,52 @@ export default function ArtistPage() {
 
         </div>
       </div>
+
+      {/* Barra de Popularidade */}
+      <div className="mt-8 border-t border-gray-700 pt-8">
+        <h2 className="text-2xl font-bold mb-6 text-center">Popularidade do Artista</h2>
+
+        <div className="max-w-2xl mx-auto">
+          {/* Label e valor */}
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-lg font-semibold" style={{ color: getPopularityColor(artist.popularity) }}>
+              {getPopularityLabel(artist.popularity)}
+            </span>
+            <span className="text-2xl font-bold">
+              {artist.popularity}<span className="text-gray-500 text-lg">/100</span>
+            </span>
+          </div>
+
+          {/* Barra de progresso */}
+          <div className="w-full bg-gray-800 rounded-full h-8 overflow-hidden shadow-inner">
+            <div
+              className="h-full rounded-full transition-all duration-1000 ease-out flex items-center justify-end pr-3"
+              style={{
+                width: `${artist.popularity}%`,
+                backgroundColor: getPopularityColor(artist.popularity),
+                boxShadow: `0 0 20px ${getPopularityColor(artist.popularity)}40`
+              }}
+            >
+              {artist.popularity > 15 && (
+                <span className="text-white font-bold text-sm drop-shadow-lg">
+                  {artist.popularity}%
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Escala de referência */}
+          <div className="flex justify-between mt-2 text-xs text-gray-500">
+            <span>0</span>
+            <span>25</span>
+            <span>50</span>
+            <span>75</span>
+            <span>100</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
     </div>
   </div>
 );

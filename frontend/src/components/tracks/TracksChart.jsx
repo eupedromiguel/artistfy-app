@@ -38,7 +38,7 @@ export default function TracksChart({ tracks }) {
         <div className="mb-4">
           <h3 className="text-xl font-bold mb-2">Faixas por Ano</h3>
           <p className="text-xs text-gray-500">
-            * Gráfico baseado nos dados exibidos na tela
+            * Gráfico baseado nas faixas carregadas
           </p>
         </div>
 
@@ -64,7 +64,7 @@ export default function TracksChart({ tracks }) {
         <div className="mb-4">
           <h3 className="text-xl font-bold mb-2">Top 5 Gravadoras</h3>
           <p className="text-xs text-gray-500">
-            * Gráfico baseado nos dados exibidos na tela
+            * Gráfico baseado nas faixas carregadas
           </p>
         </div>
 

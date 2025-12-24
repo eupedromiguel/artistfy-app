@@ -65,7 +65,7 @@ export default function AlbumsPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <Button variant="secondary" onClick={() => navigate(`/artista/${id}`)}>
-          ← Voltar para {artist?.name}
+          Voltar para {artist?.name}
         </Button>
       </div>
 

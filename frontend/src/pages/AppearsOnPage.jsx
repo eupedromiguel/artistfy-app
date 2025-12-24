@@ -69,7 +69,7 @@ export default function AppearsOnPage() {
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
         <Button variant="secondary" onClick={() => navigate(`/artista/${id}`)}>
-          ← Voltar para {artist?.name}
+          Voltar para {artist?.name}
         </Button>
       </div>
 
@@ -84,7 +84,6 @@ export default function AppearsOnPage() {
 
       {appearsOn.length > 0 && (
         <>
-          <AlbumsChart albums={appearsOn} />
           <AlbumList albums={appearsOn} />
         </>
       )}

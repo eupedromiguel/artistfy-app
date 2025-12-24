@@ -40,7 +40,7 @@ export default function SearchPage() {
   };
 
   const handleSelectArtist = (artistId) => {
-    navigate(`/artista/${artistId}`);
+    navigate(`/artista/${artistId}`, { state: { fromSearch: true } });
   };
 
   return (
