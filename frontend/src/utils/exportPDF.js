@@ -102,15 +102,17 @@ export function exportTracksToPDF(tracks, artistName) {
  * Exporta álbuns para PDF
  * @param {Array} albums - Array de álbuns
  * @param {string} artistName - Nome do artista
+ * @param {string} customTitle - Título customizado (opcional)
  */
-export function exportAlbumsToPDF(albums, artistName) {
+export function exportAlbumsToPDF(albums, artistName, customTitle = null) {
   const printWindow = window.open('', '_blank');
+  const title = customTitle || `Álbuns - ${artistName}`;
 
   const html = `
     <!DOCTYPE html>
     <html>
       <head>
-        <title>Álbuns - ${artistName}</title>
+        <title>${title}</title>
         <style>
           body {
             font-family: Arial, sans-serif;
@@ -148,7 +150,7 @@ export function exportAlbumsToPDF(albums, artistName) {
         </style>
       </head>
       <body>
-        <h1>Álbuns - ${artistName}</h1>
+        <h1>${title}</h1>
         <p><strong>Total de álbuns:</strong> ${albums.length}</p>
         <p><strong>Data de geração:</strong> ${new Date().toLocaleDateString('pt-BR')}</p>
 

@@ -1,10 +1,10 @@
 import { spotifyRequest } from './lib/spotify.js';
-import { enrichTracksWithLabels, fetchAlbumsBatch } from './lib/batchProcessor.js';
+import { fetchAlbumsBatch } from './lib/batchProcessor.js';
 import { handleError, validateParams } from './lib/errorHandler.js';
 
 /**
- * GET /api/artist-tracks
- * Retorna faixas do artista com gravadora (batch otimizado)
+ * GET /api/artist-appears-on
+ * Retorna álbuns onde o artista aparece (features, colaborações)
  * Query params: id (ID do artista), offset (padrão: 0), limit (padrão: 20)
  */
 export default async (req, res) => {
@@ -29,7 +29,7 @@ export default async (req, res) => {
     const offsetNum = parseInt(offset);
     const limitNum = parseInt(limit);
 
-    // Busca TODOS os álbuns do artista com paginação
+    // Busca TODOS os álbuns "appears_on" do artista com paginação
     let allAlbums = [];
     let albumOffset = 0;
     const albumLimit = 50; // Máximo permitido pela API do Spotify
@@ -37,7 +37,7 @@ export default async (req, res) => {
 
     while (hasMoreAlbums) {
       const albums = await spotifyRequest(
-        `/artists/${id}/albums?limit=${albumLimit}&offset=${albumOffset}&include_groups=album,single`
+        `/artists/${id}/albums?limit=${albumLimit}&offset=${albumOffset}&include_groups=appears_on`
       );
 
       if (!albums.items || albums.items.length === 0) {
@@ -51,7 +51,7 @@ export default async (req, res) => {
 
     if (allAlbums.length === 0) {
       return res.status(200).json({
-        tracks: [],
+        appearsOn: [],
         total: 0,
         offset: offsetNum,
         limit: limitNum,
@@ -62,51 +62,36 @@ export default async (req, res) => {
     // Extrai IDs dos álbuns
     const albumIds = allAlbums.map(album => album.id);
 
-    // Busca informações completas dos álbuns em batch (inclui tracks.items)
+    // Busca detalhes completos dos álbuns em batch
     const albumMap = await fetchAlbumsBatch(albumIds);
 
-    // Extrai TODAS as tracks de TODOS os álbuns
-    const allTracks = [];
-    allAlbums.forEach((album) => {
-      const albumDetails = albumMap.get(album.id);
-      const tracks = albumDetails?.tracks || [];
+    // Formata resposta
+    const formattedAlbums = allAlbums
+      .map(album => {
+        const details = albumMap.get(album.id);
 
-      tracks.forEach(track => {
-        allTracks.push({
-          ...track,
-          album: {
-            id: album.id,
-            name: album.name,
-            release_date: albumDetails?.releaseDate || album.release_date,
-            images: album.images
-          }
-        });
-      });
-    });
-
-    // Remove duplicatas (mesma track em diferentes álbuns/compilações)
-    const uniqueTracks = [];
-    const seenIds = new Set();
-
-    allTracks.forEach(track => {
-      if (!seenIds.has(track.id)) {
-        seenIds.add(track.id);
-        uniqueTracks.push(track);
-      }
-    });
+        return {
+          id: album.id,
+          name: album.name,
+          releaseDate: details?.releaseDate || album.release_date,
+          label: details?.label || 'N/A',
+          totalTracks: details?.totalTracks || album.total_tracks,
+          image: album.images[0]?.url || null,
+          external_url: album.external_urls.spotify,
+          artists: album.artists.map(a => a.name).join(', ')
+        };
+      })
+      .filter(album => album.totalTracks > 1); // Filtra apenas álbuns com mais de 1 faixa
 
     // Aplica paginação
-    const paginatedTracks = uniqueTracks.slice(offsetNum, offsetNum + limitNum);
-
-    // Enriquece com gravadoras
-    const enrichedTracks = await enrichTracksWithLabels(paginatedTracks);
+    const paginatedAlbums = formattedAlbums.slice(offsetNum, offsetNum + limitNum);
 
     return res.status(200).json({
-      tracks: enrichedTracks,
-      total: uniqueTracks.length,
+      appearsOn: paginatedAlbums,
+      total: formattedAlbums.length,
       offset: offsetNum,
       limit: limitNum,
-      hasMore: offsetNum + limitNum < uniqueTracks.length
+      hasMore: offsetNum + limitNum < formattedAlbums.length
     });
 
   } catch (error) {

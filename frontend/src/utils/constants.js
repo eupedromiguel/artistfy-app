@@ -21,5 +21,6 @@ export const ENDPOINTS = {
   SEARCH_ARTIST: '/search-artist',
   ARTIST: '/artist',
   ARTIST_TRACKS: '/artist-tracks',
-  ARTIST_ALBUMS: '/artist-albums'
+  ARTIST_ALBUMS: '/artist-albums',
+  ARTIST_APPEARS_ON: '/artist-appears-on'
 };

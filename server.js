@@ -36,6 +36,7 @@ app.get('/api/search-artist', adaptVercelFunction('./frontend/api/search-artist.
 app.get('/api/artist', adaptVercelFunction('./frontend/api/artist.js'));
 app.get('/api/artist-tracks', adaptVercelFunction('./frontend/api/artist-tracks.js'));
 app.get('/api/artist-albums', adaptVercelFunction('./frontend/api/artist-albums.js'));
+app.get('/api/artist-appears-on', adaptVercelFunction('./frontend/api/artist-appears-on.js'));
 
 // Rota de health check
 app.get('/api/health', (_req, res) => {

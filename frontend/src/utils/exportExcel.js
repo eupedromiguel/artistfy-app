@@ -46,8 +46,9 @@ export function exportTracksToExcel(tracks, artistName) {
  * Exporta álbuns para arquivo Excel
  * @param {Array} albums - Array de álbuns
  * @param {string} artistName - Nome do artista
+ * @param {string} customFileName - Nome customizado para o arquivo (opcional)
  */
-export function exportAlbumsToExcel(albums, artistName) {
+export function exportAlbumsToExcel(albums, artistName, customFileName = null) {
   // Formata dados para o Excel
   const data = albums.map((album, index) => ({
     '#': index + 1,
@@ -77,6 +78,6 @@ export function exportAlbumsToExcel(albums, artistName) {
   XLSX.utils.book_append_sheet(workbook, worksheet, 'Álbuns');
 
   // Gera arquivo
-  const fileName = `${artistName}_albuns_${new Date().getTime()}.xlsx`;
+  const fileName = customFileName || `${artistName}_albuns_${new Date().getTime()}.xlsx`;
   XLSX.writeFile(workbook, fileName);
 }

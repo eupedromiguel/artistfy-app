@@ -68,12 +68,14 @@ artistfy/
 │   │   │   ├── SearchPage.jsx
 │   │   │   ├── ArtistPage.jsx
 │   │   │   ├── TracksPage.jsx
-│   │   │   └── AlbumsPage.jsx
+│   │   │   ├── AlbumsPage.jsx
+│   │   │   └── AppearsOnPage.jsx
 │   │   ├── services/           # Camada de API
 │   │   │   ├── api.js          # Configuração base do axios
 │   │   │   ├── artistService.js
 │   │   │   ├── tracksService.js
-│   │   │   └── albumsService.js
+│   │   │   ├── albumsService.js
+│   │   │   └── appearsOnService.js
 │   │   ├── utils/              # Utilitários
 │   │   │   ├── exportExcel.js  # Lógica de exportação Excel
 │   │   │   ├── exportPDF.js    # Lógica de exportação PDF
@@ -106,7 +108,8 @@ artistfy/
 │   ├── search-artist.js        # GET /api/search-artist
 │   ├── artist.js               # GET /api/artist
 │   ├── artist-tracks.js        # GET /api/artist/tracks
-│   └── artist-albums.js        # GET /api/artist/albums
+│   ├── artist-albums.js        # GET /api/artist/albums
+│   └── artist-appears-on.js    # GET /api/artist/appears-on
 │
 ├── docs/                       # Documentação adicional
 │   ├── API.md                  # Documentação das APIs
@@ -180,8 +183,9 @@ _________________________________________________________
 - Foto
 - Seguidores
 
-[BOTÃO] Faixas 
-[BOTÃO] Albuns
+[BOTÃO] Ver Faixas
+[BOTÃO] Ver Álbuns
+[BOTÃO] Aparece em
 
 _________________________________________________________
 
@@ -243,6 +247,36 @@ Ao rolar até o último albúm exibe os botões
 ##### Botão [Exportar PDF] abre modal com a mensagem :
 
 "Deseja exportar em PDF os albuns a seguir exibidos ? {$X} Albuns carregados"
+_________________________________________________________
+
+#### Página Aparece em "/artista/aparece-em"
+
+Gráficos (Recharts) baseado no que está sendo exibido (Atualiza conforme carrega mais)
+Exibe nota : Gráfico baseado nos dados exibidos na tela
+
+Carrega álbuns onde o artista aparece (features, colaborações) com paginação de 20 por vez:
+
+- Nome do álbum
+- Artista(s)
+- Lançamento
+- Gravadora
+- Número de faixas
+
+Ao rolar até o último álbum exibe os botões:
+
+[Carregar Mais] -> Carrega mais 20
+
+[Exportar em Excel] -> Do que já está carregado (nome do arquivo: "{artista}_aparece_em_{timestamp}.xlsx")
+
+[Exportar PDF] -> Do que já está carregado (título: "{artista} - Aparece em")
+
+##### Botão [Exportar em Excel] abre modal com a mensagem :
+
+"Deseja exportar em documento as aparições exibidas ? {$X} Aparições carregadas"
+
+##### Botão [Exportar PDF] abre modal com a mensagem :
+
+"Deseja exportar em PDF as aparições exibidas ? {$X} Aparições carregadas"
 
 -------------------------------------------------------------------------------------------------------------------------------
 
@@ -271,6 +305,12 @@ GET /api/artist/albums
 - Usa paginação nativa da Spotify API
 - Resposta: ~500ms
 
+GET /api/artist/appears-on
+- Álbuns onde o artista aparece (features, colaborações)
+- Paginação completa com loop (busca todos os álbuns antes de paginar)
+- Usa include_groups=appears_on
+- Resposta: ~600ms
+
 _________________________________________________________
 
 **Decisões Técnicas:**
@@ -296,6 +336,7 @@ Cada endpoint vira uma função:
 /api/artist              -> Dados básicos
 /api/artist/tracks       -> Faixas paginadas + gravadora
 /api/artist/albums       -> Álbuns paginados
+/api/artist/appears-on   -> Aparições do artista (features/colaborações)
 
 Backend só entrega JSON estruturado
 

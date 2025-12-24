@@ -69,6 +69,12 @@ export default function ArtistPage() {
             >
               Ver Álbuns
             </Button>
+
+            <Button
+              onClick={() => navigate(`/artista/${id}/aparece-em`)}
+            >
+              Aparece em
+            </Button>
           </div>
 
         </div>
