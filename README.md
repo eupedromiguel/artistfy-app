@@ -1,6 +1,4 @@
-# Design Document
-
-Artistfy
+# Artistfy
 
 Aplicação web para pesquisa de artistas no Spotify, visualização de faixas e álbuns, geração de relatórios e exportação de dados, utilizando dados públicos da Spotify Web API.
 
