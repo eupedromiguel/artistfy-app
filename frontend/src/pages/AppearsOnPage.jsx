@@ -126,6 +126,7 @@ export default function AppearsOnPage() {
         onConfirm={handleExportExcel}
         title="Exportar em Excel"
         message={`Deseja exportar em documento as aparições exibidas? ${appearsOn.length} apariç${appearsOn.length !== 1 ? 'ões' : 'ão'} carregada${appearsOn.length !== 1 ? 's' : ''}.`}
+        warningMessage="Importante: Os relatórios exibem apenas os dados que foram carregados na página. Caso queira um relatório completo certifique-se de carregar todas as aparições com o botão 'Carregar Mais' antes de exportar."
         confirmText="Exportar"
       />
 
@@ -135,6 +136,7 @@ export default function AppearsOnPage() {
         onConfirm={handleExportPDF}
         title="Exportar em PDF"
         message={`Deseja exportar em PDF as aparições exibidas? ${appearsOn.length} apariç${appearsOn.length !== 1 ? 'ões' : 'ão'} carregada${appearsOn.length !== 1 ? 's' : ''}.`}
+        warningMessage="Importante: Os relatórios exibem apenas os dados que foram carregados na página. Caso queira um relatório completo certifique-se de carregar todas as aparições com o botão 'Carregar Mais' antes de exportar."
         confirmText="Exportar"
       />
     </div>

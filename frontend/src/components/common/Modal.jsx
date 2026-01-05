@@ -7,6 +7,7 @@ export default function Modal({
   onConfirm,
   title,
   message,
+  warningMessage,
   confirmText = 'Confirmar',
   cancelText = 'Cancelar'
 }) {
@@ -29,6 +30,14 @@ export default function Modal({
       <div className="bg-spotify-gray rounded-lg p-8 max-w-md w-full mx-4 shadow-2xl">
         <h2 className="text-2xl font-bold mb-4 text-spotify-green">{title}</h2>
         <p className="text-gray-300 mb-6">{message}</p>
+
+        {warningMessage && (
+          <div className="bg-spotify-violet bg-opacity-10 border border-spotify-violet rounded-lg p-4 mb-6">
+            <p className="text-spotify-violet text-sm font-semibold">
+              {warningMessage}
+            </p>
+          </div>
+        )}
 
         <div className="flex gap-4 justify-end">
           <Button variant="secondary" onClick={onClose}>

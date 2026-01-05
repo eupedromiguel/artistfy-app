@@ -7,6 +7,7 @@ import ArtistPage from './pages/ArtistPage';
 import TracksPage from './pages/TracksPage';
 import AlbumsPage from './pages/AlbumsPage';
 import AppearsOnPage from './pages/AppearsOnPage';
+import HowToUsePage from './pages/HowToUsePage';
 
 function AppContent() {
   const location = useLocation();
@@ -24,6 +25,7 @@ function AppContent() {
           <Route path="/artista/:id/faixas" element={<TracksPage />} />
           <Route path="/artista/:id/albuns" element={<AlbumsPage />} />
           <Route path="/artista/:id/aparece-em" element={<AppearsOnPage />} />
+          <Route path="/como-usar" element={<HowToUsePage />} />
         </Routes>
       </main>
 

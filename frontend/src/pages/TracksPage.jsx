@@ -123,6 +123,7 @@ export default function TracksPage() {
         onConfirm={handleExportExcel}
         title="Exportar em Excel"
         message={`Deseja exportar em documento as faixas a seguir exibidas? ${tracks.length} faixa${tracks.length !== 1 ? 's' : ''} carregada${tracks.length !== 1 ? 's' : ''}.`}
+        warningMessage="Importante: Os relatórios exibem apenas os dados que foram carregados na página. Caso queira um relatório completo certifique-se de carregar todas as músicas com o botão 'Carregar Mais' antes de exportar."
         confirmText="Exportar"
       />
 
@@ -131,7 +132,8 @@ export default function TracksPage() {
         onClose={() => setShowPDFModal(false)}
         onConfirm={handleExportPDF}
         title="Exportar em PDF"
-        message={`Deseja exportar em PDF as faixas a seguir exibidas? ${tracks.length} faixa${tracks.length !== 1 ? 's' : ''} carregada${tracks.length !== 1 ? 's' : ''}.`}
+        message={`Deseja exportar em PDF as faixas a seguir exibidas? ${tracks.length} faixa${tracks.length !== 1 ? 's' : ''} carregada${tracks.length !== 1 ? 's' : ''}. `}
+        warningMessage="Importante: Os relatórios exibem apenas os dados que foram carregados na página. Caso queira um relatório completo certifique-se de carregar todas as músicas com o botão 'Carregar Mais' antes de exportar."
         confirmText="Exportar"
       />
     </div>

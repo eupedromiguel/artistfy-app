@@ -80,8 +80,7 @@ export default async (req, res) => {
           external_url: album.external_urls.spotify,
           artists: album.artists.map(a => a.name).join(', ')
         };
-      })
-      .filter(album => album.totalTracks > 1); // Filtra apenas álbuns com mais de 1 faixa
+      });
 
     // Aplica paginação
     const paginatedAlbums = formattedAlbums.slice(offsetNum, offsetNum + limitNum);

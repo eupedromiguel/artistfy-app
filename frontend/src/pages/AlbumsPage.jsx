@@ -123,6 +123,7 @@ export default function AlbumsPage() {
         onConfirm={handleExportExcel}
         title="Exportar em Excel"
         message={`Deseja exportar em documento os álbuns a seguir exibidos? ${albums.length} álbu${albums.length !== 1 ? 'ns' : 'm'} carregado${albums.length !== 1 ? 's' : ''}.`}
+        warningMessage="Importante: Os relatórios exibem apenas os dados que foram carregados na página. Caso queira um relatório completo certifique-se de carregar todos os álbuns com o botão 'Carregar Mais' antes de exportar."
         confirmText="Exportar"
       />
 
@@ -132,6 +133,7 @@ export default function AlbumsPage() {
         onConfirm={handleExportPDF}
         title="Exportar em PDF"
         message={`Deseja exportar em PDF os álbuns a seguir exibidos? ${albums.length} álbu${albums.length !== 1 ? 'ns' : 'm'} carregado${albums.length !== 1 ? 's' : ''}.`}
+        warningMessage="Importante: Os relatórios exibem apenas os dados que foram carregados na página. Caso queira um relatório completo certifique-se de carregar todos os álbuns com o botão 'Carregar Mais' antes de exportar."
         confirmText="Exportar"
       />
     </div>
