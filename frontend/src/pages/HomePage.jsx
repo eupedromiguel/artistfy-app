@@ -18,7 +18,7 @@ export default function HomePage() {
       <div
         className="absolute bg-center bg-no-repeat"
         style={{
-          backgroundImage: 'url(/img-bg.PNG)',
+          backgroundImage: 'url(/img-bg.png)',
           filter: 'blur(7px)',
           opacity: 1,
           zIndex: -2,
